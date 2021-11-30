@@ -1,7 +1,9 @@
-    CREATE TABLE `test1`.`products` ( `product_id` INT(8) NOT NULL AUTO_INCREMENT , `product_name` VARCHAR(255) NOT NULL , `category` VARCHAR(30) NOT NULL DEFAULT 'accessories' , `brand` VARCHAR(30) NOT NULL , `price` INT(9) NOT NULL DEFAULT '0' , `status` BOOLEAN NOT NULL DEFAULT TRUE , `instock` BOOLEAN NOT NULL DEFAULT TRUE ,`imgurl` VARCHAR(255) DEFAULT '' ,`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`product_id`), UNIQUE `product_name` (`product_name`)) ENGINE = InnoDB;
-$sql = "CREATE TABLE `test1`.`products` ( `product_id` INT(8) NOT NULL AUTO_INCREMENT 
-, `product_name` VARCHAR(255) NOT NULL , `category` VARCHAR(30) NOT NULL DEFAULT \'accessories\' 
-, `brand` VARCHAR(30) NOT NULL , `price` INT(9) NOT NULL DEFAULT \'0\' 
-, `status` BOOLEAN NOT NULL DEFAULT TRUE , `instock` BOOLEAN NOT NULL DEFAULT TRUE 
-,`imgurl` VARCHAR(255) DEFAULT \'\' ,`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP 
-, PRIMARY KEY (`product_id`), UNIQUE `product_name` (`product_name`)) ENGINE = InnoDB;";
+CREATE TABLE `test1`.`products` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(100) NOT NULL , `slug` VARCHAR(100) NOT NULL , `price` INT NOT NULL , `discount_price` INT NOT NULL , `category` VARCHAR(30) NOT NULL , `color` VARCHAR(30) NULL , `sizes` VARCHAR(10) NULL , `sale` BOOLEAN NOT NULL DEFAULT TRUE , `shipped_from_abroad` BOOLEAN NOT NULL DEFAULT TRUE , `quantity` INT NOT NULL DEFAULT '50' , `star_ratings` FLOAT NOT NULL DEFAULT '5.0' , `votes` INT NOT NULL DEFAULT '100' , `img` VARCHAR(255) NULL , `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+$sql = "CREATE TABLE `test1`.`products` ( `id` INT NOT NULL AUTO_INCREMENT , 
+`name` VARCHAR(100) NOT NULL , `slug` VARCHAR(100) NOT NULL , `price` INT NOT NULL , 
+`discount_price` INT NOT NULL , `category` VARCHAR(30) NOT NULL , `color` VARCHAR(30) NULL , 
+`sizes` VARCHAR(10) NULL , `sale` BOOLEAN NOT NULL DEFAULT TRUE , `shipped_from_abroad` 
+BOOLEAN NOT NULL DEFAULT TRUE , `quantity` INT NOT NULL DEFAULT \'50\' , `star_ratings` 
+FLOAT NOT NULL DEFAULT \'5.0\' , `votes` INT NOT NULL DEFAULT \'100\' , `img` VARCHAR(255) NULL 
+, `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;";

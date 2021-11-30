@@ -117,7 +117,7 @@ class OrderModel extends Database
         $avail_product_id = array();
         $avail_product = $this->selectAllProducts();
         foreach ($avail_product as $key => $value) {
-            array_push($avail_product_id, $value['product_id']);
+            array_push($avail_product_id, $value['id']);
 
         }
         

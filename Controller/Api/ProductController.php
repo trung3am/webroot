@@ -6,8 +6,8 @@ class ProductController extends BaseController
     {
         $token = $this->getToken();
         $product = $this->getRequestBody();
-        if (!isset($product->product_name) || !isset($product->brand) 
-        || !isset($product->category) || !isset($product->price)) {
+        if (!isset($product->name) || !isset($product->slug) 
+        || !isset($product->category) || !isset($product->price) || !isset($product->discount_price)) {
             $strErrorDesc = "Missing information for create product";
             $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
             array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')); 
@@ -45,7 +45,7 @@ class ProductController extends BaseController
         $products = $productModel->selectAllProducts();
         if ($products) {
             $this->sendOutput(json_encode($products),
-            array('Content-Type: application/json', 'HTTP/1.1 201 Created')); 
+            array('Content-Type: application/json', 'HTTP/1.1 200 OK')); 
         }
     }
 
@@ -54,14 +54,16 @@ class ProductController extends BaseController
         $token = $this->getToken();
         $product = $this->getRequestBody();
         
-        if (!isset($product->product_id)) {
+        if (!isset($product->id)) {
             $strErrorDesc ="invalid";
             $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
             array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')); 
             return;
         }
-        if (!isset($product->product_name) && !isset($product->category) &&!isset($product->brand) &&
-        !isset($product->instock) && !isset($product->status) && !isset($product->price) && !isset($product->imgurl) ) {
+        if (!isset($product->name) && !isset($product->category) &&!isset($product->slug) &&
+        !isset($product->discount_price) && !isset($product->color) && !isset($product->price) && !isset($product->img)
+        && !isset($product->sizes) && !isset($product->sale) && !isset($product->shipped_from_abroad) && !isset($product->quantity)
+        && !isset($product->star_ratings) && !isset($product->votes) ) {
             $strErrorDesc ="invalid";
             $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
             array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')); 

@@ -87,7 +87,7 @@ class Database {
 
   public function selectAllProducts()
   {
-    $res = $this->connection->query("select * from products where status = 1");
+    $res = $this->connection->query("select * from products");
     $res = $res->fetch_all(MYSQLI_ASSOC);
     return $res;
   }
