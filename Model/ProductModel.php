@@ -11,7 +11,17 @@ class ProductModel extends Database {
 
     public function getAllProducts()
     {
-        return $this->selectAllProducts();
+
+        $products = $this->selectAllProducts();
+
+        foreach ($products as $key => $value) {
+
+          if ($value['sizes']!== null) {
+            $temp = explode('-',$value['sizes']); 
+            $value['sizes'] = $temp;
+          }
+        }
+        return $products;
     }
 
     public function editProduct($product)

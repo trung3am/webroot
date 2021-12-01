@@ -42,7 +42,7 @@ class ProductController extends BaseController
     public function getAllProducts()
     {
         $productModel = new ProductModel();
-        $products = $productModel->selectAllProducts();
+        $products = $productModel->getAllProducts();
         if ($products) {
             $this->sendOutput(json_encode($products),
             array('Content-Type: application/json', 'HTTP/1.1 200 OK')); 
