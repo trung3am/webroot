@@ -14,13 +14,7 @@ class ProductModel extends Database {
 
         $products = $this->selectAllProducts();
 
-        foreach ($products as $key => $value) {
 
-          if ($value['sizes']!== null) {
-            $temp = explode('-',$value['sizes']); 
-            $value['sizes'] = $temp;
-          }
-        }
         return $products;
     }
 
