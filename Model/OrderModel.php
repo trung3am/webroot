@@ -17,8 +17,8 @@ class OrderModel extends Database
             
             return;
         }
-        $query = "insert into orders (client, email, phone_number, user_id, address)
-        values(\"{$user['user_name']}\", \"{$user['email']}\", \"{$user['phone_number']}\", \"{$user['user_id']}\",\"{$order->address}\") ";
+        $query = "insert into orders (client, email, phone_number, user_id, address, payment)
+        values(\"{$user['user_name']}\", \"{$user['email']}\", \"{$user['phone_number']}\", \"{$user['user_id']}\",\"{$order->address}\"),\"{$order->payment}\" ";
         
         return $this->createOrder($query, $order);
     }
@@ -28,8 +28,8 @@ class OrderModel extends Database
         if (!$this->checkProductOrder($order)) {
             return;
         }
-        $query = "insert into orders (client, email, phone_number, address)
-        values(\"{$order->user_name}\", \"{$order->email}\", \"{$order->phone_number}\",\"{$order->address}\") ";
+        $query = "insert into orders (client, email, phone_number, address, payment)
+        values(\"{$order->user_name}\", \"{$order->email}\", \"{$order->phone_number}\",\"{$order->address}\",\"{$order->payment}\") ";
         return $this->createOrder($query, $order);
     }
 
