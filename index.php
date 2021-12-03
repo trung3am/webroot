@@ -3,7 +3,7 @@ header('Access-Control-Allow-Origin: *');
 
 header('Access-Control-Allow-Methods: GET, POST, PUT');
 
-header("Access-Control-Allow-Headers: X-Requested-With");
+header("Access-Control-Allow-Headers: *");
 
 require __DIR__ . "./inc/bootstrap.php";
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -66,10 +66,15 @@ if(strtoupper($_SERVER['REQUEST_METHOD'])=="PUT"){
     $editProduct = new ProductController();
     $editProduct->editProduct();
   }
+  if ($uri[2] == "product" && $uri[3] == "hide") {
+    $editProduct = new ProductController();
+    $editProduct->hideProduct();
+  }
   if ($uri[2] == "order" && $uri[3] == "process") {
     $editOrder = new OrderController();
     $editOrder->processOrder();
   }
+  
 }
 
 

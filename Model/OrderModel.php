@@ -37,10 +37,18 @@ class OrderModel extends Database
     {
         try {
             $order_id = $this->insert($query);
-            for ($i=0; $i < count($order->product_id); $i++) { 
+            for ($i=0; $i < count($order->products); $i++) { 
+                if (!isset($order->products[$i]->sizes)||$order->products[$i]->sizes== null) {
+                    
+                    $this->insert("insert into order_details (order_id, product_id, quantity)
+                values (\"{$order_id}\", \"{$order->products[$i]->product_id}\",\"{$order->products[$i]->quantity}\")");
+                }
+                else {
+                    
+                    $this->insert("insert into order_details (order_id, product_id, quantity, size)
+                values (\"{$order_id}\", \"{$order->products[$i]->product_id}\",\"{$order->products[$i]->quantity}\",\"{$order->products[$i]->sizes}\")");
+                }
                 
-                $this->insert("insert into order_details (order_id, product_id, quantity)
-                values (\"{$order_id}\", \"{$order->product_id[$i]}\",\"{$order->quantity[$i]}\")");
             }
                
             
@@ -121,8 +129,8 @@ class OrderModel extends Database
 
         }
         
-        foreach ($order->product_id as $key => $value) {
-            if (array_search($value, $avail_product_id) === false) {
+        foreach ($order->products as $key => $value) {
+            if (array_search($value->product_id, $avail_product_id) === false) {
                 return 0;
             }
         }

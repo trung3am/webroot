@@ -87,7 +87,7 @@ class Database {
 
   public function selectAllProducts()
   {
-    $res = $this->connection->query("select * from products");
+    $res = $this->connection->query("select * from products where hidden = 0");
     $res = $res->fetch_all(MYSQLI_ASSOC);
     return $res;
   }

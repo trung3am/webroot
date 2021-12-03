@@ -5,7 +5,7 @@ class OrderController extends BaseController
     public function createOrder()
     {
         $order = $this->getRequestBody();
-        if (!isset($order->product_id) || !isset($order->quantity) || !isset($order->address) ||count($order->product_id)!== count($order->quantity)  ) {
+        if (!isset($order->products) || !isset($order->address)   ) {
             $strErrorDesc = "Invalid";
             $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
             array('Content-Type: application/json', 'HTTP/1.1 400 Bad request')); 

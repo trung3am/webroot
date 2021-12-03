@@ -49,6 +49,42 @@ class ProductController extends BaseController
         }
     }
 
+    public function hideProduct()
+    {
+        $token = $this->getToken();
+        $product = $this->getRequestBody();
+        
+        if (!isset($product->product_id)) {
+            $strErrorDesc ="invalid";
+            $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
+            array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')); 
+            return;
+        }
+        $productModel = new ProductModel();
+        if (null ==($productModel->adminAuth($token))) {
+            $strErrorDesc = "Unauthorized";
+            $this->sendOutput(json_encode(array('error' =>$strErrorDesc)),
+            array('Content-Type: application/json', "HTTP/1.1 401 Unauthorized"));
+            return;
+        }
+        try {
+            $res = $productModel->hideProduct($product);
+            if ($res) {
+                $this->sendOutput(json_encode(array('message' => "hidden")),
+                array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+                return;
+            }
+        } catch (Exception $e) {
+            $strErrorDesc = $e->getMessage();
+            $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
+            array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')); 
+            return;
+        }
+        $strErrorDesc ="failed to edit product";
+        $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
+        array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')); 
+    }
+    
     public function editProduct()
     {
         $token = $this->getToken();

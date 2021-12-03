@@ -193,6 +193,13 @@ class ProductModel extends Database {
       return $query;
     }
 
+    public function hideProduct($product)
+    {
+      
+      return $this->edit("update products set hidden = \"1\" where id = \"{$product->product_id}\";
+      select id from products where id = \"{$product->product_id}\" and hidden = \"1\"");
+    }
+
     public function adminAuth($jwt)
     {
       if (!$jwt) {

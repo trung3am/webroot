@@ -63,7 +63,7 @@ class UserController extends BaseController
   {
     $strErrorDesc = '';
     $user = $this->getRequestBody();
-    $header = apache_request_headers();
+
     
     $token = $this->getToken();
     
@@ -99,7 +99,7 @@ class UserController extends BaseController
     }
     if ($res) {
       $this->sendOutput(
-        json_encode(array('edit' => "Ok")), array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+        json_encode(array('message' => "Ok")), array('Content-Type: application/json', 'HTTP/1.1 200 OK')
       );
     }
 
@@ -135,7 +135,7 @@ class UserController extends BaseController
 
     }
     $this->sendOutput(
-      json_encode(array('message' => "invalid")), array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')
+      json_encode(array('error' => "invalid")), array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')
     );
   } 
 
@@ -159,7 +159,7 @@ class UserController extends BaseController
         }
         else {
           $this->sendOutput(
-            json_encode(array('message' => 'invalid')), array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')
+            json_encode(array('error' => 'invalid')), array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')
             );
         }
       } catch (Exception $e) {
