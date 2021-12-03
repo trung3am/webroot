@@ -34,7 +34,7 @@ class OrderController extends BaseController
                 
                 return;
             }
-            if ($this->validateName($order->user_name) || $this->validateEmail($order->email) || $this->validatePhoneNumber($order->phone_number)) {
+            if ( $this->validateEmail($order->email) || $this->validatePhoneNumber($order->phone_number)) {
                 $strErrorDesc = "Invalid";
                 $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', 'HTTP/1.1 400 Bad request')); 
