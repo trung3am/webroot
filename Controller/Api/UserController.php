@@ -132,7 +132,63 @@ class UserController extends BaseController
       );     
       return;
       
+    }
+    $this->sendOutput(
+      json_encode(array('error' => "invalid")), array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')
+    );
+  } 
 
+  public function getUserAdmin()
+  {
+    $token = $this->getToken();
+    $userModel = new UserModel();
+    if (!$userModel->adminAuth($token)) {
+      $this->sendOutput(
+        json_encode(array('error' => "invalid")), array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')
+      );
+      return;
+    }
+    try {
+      $user = $userModel->getAllUser();
+      $this->sendOutput(
+        json_encode($user), array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+      );     
+      return;
+    } catch (Exception $e) {
+      echo $e;
+    }
+    $this->sendOutput(
+      json_encode(array('error' => "invalid")), array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')
+    );
+  }
+
+
+  public function adminLogin()
+  {
+    $user = $this->getRequestBody();
+    if (!isset($user->user_name) || !isset($user->password)) {
+      $strErrorDesc = "missing username/password";
+      $this->sendOutput(json_encode(array('error' =>$strErrorDesc)),
+      array('Content-Type: application/json', "HTTP/1.1 400 Bad Request"));
+      return;
+    }
+    $userModel = new UserModel();
+    $data = $userModel->getInfoAdmin($user);
+    if (password_verify($user->password,$data['password'])) {
+      
+      if (!$data['jwt']) {
+
+        $data = $userModel->loginUser($user,$data['user_id']);
+
+      }
+      else {
+        $data = $userModel->getUser($data['jwt']);
+      }
+      $this->sendOutput(
+        json_encode($data), array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+      );     
+      return;
+      
     }
     $this->sendOutput(
       json_encode(array('error' => "invalid")), array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request')
@@ -140,6 +196,7 @@ class UserController extends BaseController
   } 
 
 
+  
   public function logoutUser()
   {
     $token = $this->getToken();

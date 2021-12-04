@@ -15,6 +15,10 @@ require PROJECT_ROOT_PATH . "/Controller/Api/ProductController.php";
 require PROJECT_ROOT_PATH . "/Controller/Api/OrderController.php";
 
 if(strtoupper($_SERVER['REQUEST_METHOD'])== "GET"){
+  if ($uri[2]=='admin' && $uri[3] == 'getuser') {
+    $user = new UserController();
+    $user->getUserAdmin();
+  }
   if ($uri[2]=='user' && $uri[3] == 'me') {
     $user = new UserController();
     $user->getUser();
@@ -43,6 +47,10 @@ if(strtoupper($_SERVER['REQUEST_METHOD'])== "POST"){
   if ($uri[2] == "user" && $uri[3] == "login") {
     $loginUser = new UserController();
     $loginUser->loginUser();
+  }
+  if ($uri[2] == "admin" && $uri[3] == "login") {
+    $adminLogin = new UserController();
+    $adminLogin->adminLogin();
   }
   if ($uri[2] == "product" && $uri[3] == "create") {
     $createProduct = new ProductController();

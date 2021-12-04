@@ -64,9 +64,16 @@ class UserModel extends Database {
     }
   }
 
+
   public function getInfoLogin($user)
   {
-    $query=("select  user_id, password, jwt from users where user_name = \"{$user->user_name}\" ");
+    $query=("select  user_id, password, jwt from users where user_name = \"{$user->user_name}\" and admin =\"0\" ");
+    return $this->selectOne($query);
+  }
+
+  public function getInfoAdmin($user)
+  {
+    $query=("select  user_id, password, jwt from users where user_name = \"{$user->user_name}\" and admin = \"1\" ");
     return $this->selectOne($query);
   }
 
@@ -84,12 +91,14 @@ class UserModel extends Database {
       }
   }
 
+
+
   public function getUser($jwt)
   {
     if ($jwt==null) {
       return 0;
     }
-    $query = "select user_name, email, phone_number, jwt from users where jwt = \"{$jwt}\"";
+    $query = "select user_name, email, phone_number, jwt, admin from users where jwt = \"{$jwt}\"";
       return $this->selectOne($query);
   }
 
@@ -117,13 +126,16 @@ class UserModel extends Database {
     if (!$jwt) {
       return null;
     }
-    $query = "select * from users where jwt = \"{$jwt}\" and admin = 1";
+    $query = "select * from users where jwt = \"{$jwt}\" and admin = \"1\"";
     return $this->selectOne($query);
     
   }
 
 
-
+  public function getAllUser()
+  {
+    return $this->selectAll("select user_id, user_name, banned, email, phone_number from users where admin <> \"1\"");
+  }
 
 
   private function base64url_encode($data)
